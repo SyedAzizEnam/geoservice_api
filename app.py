@@ -25,6 +25,9 @@ def geoservice_method():
         if request.method == 'POST':
             data = request.json
 
+        if 'address' not in data:
+            return bad_request()
+
         output = {}
         output["result"] = {}
 
@@ -41,7 +44,7 @@ def geoservice_method():
                 response_json = json.loads(response.read().decode(response.info().get_param('charset') or 'utf-8'))
 
                 output_data = {}
-                for param, path in service["reponse_paths"].items():
+                for param, path in service["response_paths"].items():
                     result = response_json
                     for entry in path.split('.'):
                         if 'list__' in entry:
@@ -56,32 +59,51 @@ def geoservice_method():
                 output["result"]["search_address"] = data["address"]
                 output["status"] = 200
 
-                info_log.info("Succesfully pulled lat/lng from service (" + service["name"]+")")
+                info_log.info("Successfully pulled lat/lng from service (" + service["name"]+")")
                 return jsonify(output)
 
             except (KeyError, IndexError) as e:
-                info_log.error("Service name: ("+service["name"]+ \
-                                ") - Check service configurations in config.yaml - " + \
+                info_log.error("Service name: ("+service["name"]+
+                                ") - Check service configurations in config.yaml - " +
                                 repr(e))
                 continue
 
             except urllib.error.URLError as e:
-                info_log.error("Service name: ("+service["name"]+ \
-                                ") - Check service url in config.yaml - " + \
+                info_log.error("Service name: ("+service["name"]+
+                                ") - Check service url in config.yaml - " +
                                 repr(e))
                 continue
 
             except Exception as e:
-                info_log.error("Service name: ("+service["name"]+ \
-                                ") - Unexpected service error - " + \
+                info_log.error("Service name: ("+service["name"]+
+                                ") - Unexpected service error - " +
                                 repr(e))
                 continue
 
-        output["status"] = 503
-        output["result"]["message"] = "Unable to reach geoservices"
+        info_log.info("unsuccessful attempt to pull lat/lng from services")
+        return service_unavailable()
 
-        info_log.info("unsuccesful attempt to pull lat/lng from services")
-        return jsonify(output)
+
+@app.errorhandler(400)
+def bad_request(error=None):
+    message = {
+            'status': 'FAIL',
+            'statusCode': 400,
+            'message': 'Bad Request'
+    }
+    resp = jsonify(message)
+    return resp
+
+
+@app.errorhandler(503)
+def service_unavailable(error=None):
+    message = {
+            'status': 'FAIL',
+            'statusCode': 503,
+            'message': 'Services Unavailable'
+    }
+    resp = jsonify(message)
+    return resp
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, port=80)

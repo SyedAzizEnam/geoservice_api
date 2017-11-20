@@ -4,7 +4,7 @@ Services:
     address_field: address
     request_param:
       key: AIzaSyDUNF1zBmo9VBNlNxsiXp5ux-0BUJMTmnc
-    reponse_paths:
+    response_paths:
       lat: results.list__0.geometry.location.lat
       lng: results.list__0.geometry.location.lng
   - name: HERE
@@ -13,7 +13,7 @@ Services:
     request_param:
       app_code: 6iRP835fSnTWSbiCDqtgBA
       app_id: H3XSJUNFYE6gJyETcM8x
-    reponse_paths:
+    response_paths:
       lat: Response.View.list__0.Result.list__0.Location.DisplayPosition.Latitude
       lng: Response.View.list__0.Result.list__0.Location.DisplayPosition.Longitude
 

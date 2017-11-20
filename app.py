@@ -1,13 +1,18 @@
 from flask import Flask, request, jsonify
 import yaml
-import traceback
 import urllib
 import urllib.request
 import json
+import logging.config
 
 with open('config.yaml') as f:
     config = yaml.load(f)
     services = config["Services"]
+
+with open('logging.yaml') as f:
+    logging.config.dictConfig(yaml.load(f))
+error_log = logging.getLogger('error_log')
+info_log = logging.getLogger('info_log')
 
 app = Flask(__name__)
 
@@ -52,17 +57,32 @@ def geoservice_method():
                 output["result"]["search_address"] = data["address"]
                 output["status"] = 200
 
+                info_log.info("Succesfully pulled lat/lng from service (" + service["name"]+")")
                 return jsonify(output)
 
+            except (KeyError, IndexError) as e:
+                error_log.error("Service name: ("+service["name"]+ \
+                                ") - Check service configurations in config.yaml -" + \
+                                repr(e))
+                continue
+
+            except urllib.error.URLError as e:
+                error_log.error("Service name: ("+service["name"]+ \
+                                ") - Check service url in config.yaml - " + \
+                                repr(e))
+                continue
+
             except Exception as e:
-                print("UNEXPECTED SERVICE ERROR TRACEBACK:")
-                print(traceback.format_exc())
+                error_log.error("Service name: ("+service["name"]+ \
+                                ") - Unexpected service error - " + \
+                                repr(e))
                 continue
 
         output["status"] = 503
         output["result"]["message"] = "Unable to reach geoservices"
 
+        info_log.info("unsuccesful attempt to pull lat/lng from services")
         return jsonify(output)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True, threaded=True, port=80)
+    app.run(host='0.0.0.0', threaded=True, port=80)

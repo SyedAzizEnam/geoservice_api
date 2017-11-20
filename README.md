@@ -38,8 +38,7 @@ This is an example of a successful output from the service.
 ```
 
 # Adding Third Party Services
-
-Additional services can be added in the 'service_config.yaml' file. The format of the yaml is as follows:
+Currently there are two geolocations services that are configured (Google, HERE). The services are configured in 'service_config.yaml' the services are used in the order that they appear in the configuration file. The api attempts to use the geolocation services in order until it successfully retreives a lat/lng pair. Additional services can be added to the file by following this format:
 ```yaml
   - name: name_of_service
     URL: url_of_service

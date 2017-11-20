@@ -7,9 +7,6 @@ handlers:
     class: logging.StreamHandler
     formatter: simple
 loggers:
-  error_log:
-    level: ERROR
-    handlers: [stream]
-  info_log:
+  root_log:
     level: INFO
     handlers: [stream]

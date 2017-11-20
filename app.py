@@ -11,8 +11,7 @@ with open('config.yaml') as f:
 
 with open('logging.yaml') as f:
     logging.config.dictConfig(yaml.load(f))
-error_log = logging.getLogger('error_log')
-info_log = logging.getLogger('info_log')
+info_log = logging.getLogger('root_log')
 
 app = Flask(__name__)
 
@@ -61,19 +60,19 @@ def geoservice_method():
                 return jsonify(output)
 
             except (KeyError, IndexError) as e:
-                error_log.error("Service name: ("+service["name"]+ \
-                                ") - Check service configurations in config.yaml -" + \
+                info_log.error("Service name: ("+service["name"]+ \
+                                ") - Check service configurations in config.yaml - " + \
                                 repr(e))
                 continue
 
             except urllib.error.URLError as e:
-                error_log.error("Service name: ("+service["name"]+ \
+                info_log.error("Service name: ("+service["name"]+ \
                                 ") - Check service url in config.yaml - " + \
                                 repr(e))
                 continue
 
             except Exception as e:
-                error_log.error("Service name: ("+service["name"]+ \
+                info_log.error("Service name: ("+service["name"]+ \
                                 ") - Unexpected service error - " + \
                                 repr(e))
                 continue

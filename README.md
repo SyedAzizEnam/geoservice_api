@@ -1,6 +1,6 @@
 # Geoservices API
 
-Here is an service that can can resolve the lat, lng coordinates for an address
+Here is a service that can can resolve the lat, lng coordinates for an address
 by using third party geocoding services. 
 
 # Start up service

@@ -5,7 +5,7 @@ import urllib.request
 import json
 import logging.config
 
-with open('config.yaml') as f:
+with open('services_config.yaml') as f:
     config = yaml.load(f)
     services = config["Services"]
 

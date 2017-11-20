@@ -13,7 +13,7 @@ To run the service locally run the line: `python app.py`
 The service will now be running on the local machine and can be reached though HTTP accepting either GET or POST requests.
 
 # Using the service
-For POST requests add `{'Content-Type': 'application/json'}` to the request header and then the input JSON is as follows:
+For POST requests add `{'Content-Type': 'application/json'}` to the request header and then the input JSON format is as follows:
 
 ```javascript
 {

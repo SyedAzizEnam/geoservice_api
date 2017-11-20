@@ -12,6 +12,7 @@ To run the service locally run the line: `python app.py`
 
 The service will now be running on the local machine and can be reached though HTTP accepting either GET or POST requests.
 
+# Using the service
 For POST requests the input json is as follows:
 
 ```javascript

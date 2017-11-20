@@ -47,6 +47,6 @@ Currently there are two geolocations services that are configured (Google, HERE)
       (key:value of any request params that are required)
     response_paths:
       lat: path_to_lat_in_the_response_json 
-      lng: ath_to_lng_in_the_response_json
+      lng: path_to_lng_in_the_response_json
       (any paths that require traversing through list can be indentified by using the "list__(index)" key)
 ```

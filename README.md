@@ -9,6 +9,7 @@ The app was developed on python 3+ so please make sure python 3.0+ is installed.
 To install all required libraries run the line: `pip install -r requirements.txt`
 
 To run the service locally run the line: `python app.py`
+
 The service will now be running on the local machine and can be reached though HTTP accepting either GET or POST requests.
 
 For POST requests the input json is as follows:

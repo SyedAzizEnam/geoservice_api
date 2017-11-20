@@ -45,7 +45,7 @@ Additional services can be added in the 'service_config.yaml' file. The format o
     URL: url_of_service
     address_field: field_that_accepts_address_search_text
     request_param:
-      (key:value of any request params that are requred)
+      (key:value of any request params that are required)
     response_paths:
       lat: path_to_lat_in_the_response_json 
       lng: ath_to_lng_in_the_response_json

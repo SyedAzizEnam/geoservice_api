@@ -43,7 +43,7 @@ Additional services can be added in the 'service_config.yaml' file. The format o
 ```yaml
   - name: name_of_service
     URL: url_of_service
-    address_field: field_that_accepts_address_search_text
+    address_field: request_param_that_accepts_address_search_text
     request_param:
       (key:value of any request params that are required)
     response_paths:
